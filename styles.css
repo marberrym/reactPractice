@@ -1,7 +1,5 @@
 body {
     background-color: rgb(3, 212, 212);
-    display: flex;
-    justify-content: center;
     margin: 0;
     padding: 0;
 }
@@ -12,6 +10,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 65%;
+    border-radius: .5em;
     text-align: center;
     color: black;
     border: 2px solid darkblue;
@@ -20,10 +19,37 @@ body {
     font-family: 'Permanent Marker', cursive;
 }
 
+.samcham {
+    border-radius: .5em;
+    height: 20em;
+    border: 2px solid black;
+}
+
 .postColumn {
     display: flex;
     background-color: rgba(0, 0, 139, 0.473);
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.post {
+    background-color: rgba(245, 245, 245, 0.848);
+    margin: 1.5em;
+    padding: 1.5em;
+    border: 2px solid black;
+    border-radius: .5em;
+}
+
+.mainHead {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 4em;
+    margin: 0;
+    padding: 0;
+    text-shadow:
+        -1px -1px 0 whitesmoke,
+        1px -1px 0 whitesmoke,
+        -1px 1px 0 whitesmoke,
+        1px 1px 0 whitesmoke;
 }

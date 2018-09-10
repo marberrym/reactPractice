@@ -74,17 +74,22 @@ let posts = [
 ]
 
 
-let newstuff = posts.map(post => {
-    return h('div', {className: 'flexColumn'}, [
+let newstuff = posts.map(post => 
+     h('div', {className: 'post'}, [
+        h('img', {src: "samcham.gif", className: 'samcham'}),
         h('h2', {}, post.title),
         h('h4', {}, 'Built with React, easy peasy.'),
         h('p', {}, post.body),
         h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
     ]) 
-})
+)
 
+let myDOM = [
+    h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL'),
+    h('div', {className: 'flexColumn'}, newstuff),
+]
 
-d(newstuff, document.getElementById('postArea'));
+d(myDOM, document.getElementById('postArea'));
 
 
 
