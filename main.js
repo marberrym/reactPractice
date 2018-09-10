@@ -75,14 +75,20 @@ let posts = [
 
 
 let newstuff = posts.map(post => 
-     h('div', {className: 'post'}, [
-        h('img', {src: "samcham.gif", className: 'samcham'}),
-        h('h2', {}, post.title),
-        h('h4', {}, 'Built with React, easy peasy.'),
-        h('p', {}, post.body),
-        h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
+     h('div', {}, [ 
+        h('div', {className: 'post'}, [
+            h('div', {className: 'iconBox'}, [
+                h('img', {className: 'icon', src: 'rick.png'}),
+                h('span', {className: 'newPost'}, 'Rick Sanchez Posted:'),
+            ]),
+            
+            h('img', {src: "samcham.gif", className: 'samcham'}),
+            h('h2', {}, post.title),
+            h('h4', {}, 'Built with React, easy peasy.'),
+            h('p', {}, post.body),
+            h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
     ]) 
-)
+]))
 
 let myDOM = [
     h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL'),

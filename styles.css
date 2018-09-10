@@ -19,6 +19,35 @@ body {
     font-family: 'Permanent Marker', cursive;
 }
 
+.icon {
+    height: 5em;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.iconBox {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 139, 0.35);
+    padding-left: 1em;
+    border: 2px solid black;
+    margin-bottom: 1em;
+    width: 45%;
+    text-align: center;
+    border-radius: .5em;
+}
+
+.newPost {
+    font-size: 2em;
+    padding-left: .5em;
+    text-shadow:
+        -1px -1px 0 whitesmoke,
+        1px -1px 0 whitesmoke,
+        -1px 1px 0 whitesmoke,
+        1px 1px 0 whitesmoke;
+}
+
 .samcham {
     border-radius: .5em;
     height: 20em;
