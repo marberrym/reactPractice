@@ -2,20 +2,6 @@
 let h = React.createElement
 let d = ReactDOM.render
 
-
-let head = h('div', {}, [
-    h('h1', {}, 'Hello'),
-    h('ul', {}, ['Dummy Post One', 
-        h('li', {}, 'I like coffee and working out.')]),
-    h('ul', {}, ['Dummy Post Two',
-        h('li', {}, 'Just making REACT my bitch yaknow.')]),
-    h('ul', {}, ['Dummy Post Three',
-        h('li', {}, [`I'm a boss.`,
-            h('p', {}, 'killing this shit')])
-    
-    ])
-]);
-
 let posts = [
     {
       "userId": 1,
@@ -73,29 +59,60 @@ let posts = [
     }
 ]
 
+let User = () => {
+  return h('div', {className: 'iconBox'}, [
+    h('img', {className: 'icon', src: 'rick.png'}),
+    h('span', {className: 'newPost'}, 'Rick Sanchez Posted:'),
+  ])
+}
 
-let newstuff = posts.map(post => 
-     h('div', {}, [ 
-        h('div', {className: 'post'}, [
-            h('div', {className: 'iconBox'}, [
-                h('img', {className: 'icon', src: 'rick.png'}),
-                h('span', {className: 'newPost'}, 'Rick Sanchez Posted:'),
-            ]),
-            
-            h('img', {src: "samcham.gif", className: 'samcham'}),
-            h('h2', {}, post.title),
-            h('h4', {}, 'Built with React, easy peasy.'),
-            h('p', {}, post.body),
-            h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
+let PostContent = (blog) => {
+  return h('div', {}, [
+      h('img', {src: "samcham.gif", className: 'samcham'}),
+      h('h2', {}, blog.title),
+      h('h4', {}, 'Built with React, easy peasy.'),
+      h('p', {}, blog.body),
+      h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
+  ])
+}
+
+let Blog = (blog) => {
+  console.log(blog);
+  return h('div', {className: 'post'}, [ 
+      User(),
+      PostContent(blog)
     ]) 
-]))
+  ;
+}
 
-let myDOM = [
-    h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL'),
-    h('div', {className: 'flexColumn'}, newstuff),
-]
+let BlogList = (blogs) => blogs.map(blog => Blog(blog));
 
-d(myDOM, document.getElementById('postArea'));
+let Title = () => h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL')
+
+let BuildBlog = () => h('div', {className: 'flexColumn'}, BlogList(posts))
+
+let SideBar = () => {
+  return h('div', {className: 'sideBar'}, [
+    h('div', {className: 'link'}, h('span', {className: 'word'}, 'About')),
+    h('div', {className: 'link'}, h('span', {className: 'word'}, 'Sign Up')),
+    h('div', {className: 'link'}, h('span', {className: 'word'}, 'Register'))
+  ])
+}
+
+let BlogHomePage = () => {
+  return h('div', {}, [
+    h(Title, {}),
+    h(BuildBlog, {}),
+    h(SideBar, {})
+  ])
+}  
+
+
+
+    
+
+
+d(h(BlogHomePage), document.getElementById('postArea'));
 
 
 
