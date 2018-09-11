@@ -66,26 +66,37 @@ let User = () => {
   ])
 }
 
-let PostContent = (blog) => {
-  return h('div', {}, [
-      h('img', {src: "samcham.gif", className: 'samcham'}),
-      h('h2', {}, blog.title),
-      h('h4', {}, 'Built with React, easy peasy.'),
-      h('p', {}, blog.body),
-      h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.')
+let DeleteButton = (props) => {
+  return h('div', {className: 'flex'}, [
+    h('button', {className: 'btn', onClick: () => {
+      console.log(props.title)
+      posts = posts.filter(post => post.title !== props.title);
+      rerender();
+    }}, 'Delete this post!'),
   ])
 }
 
-let Blog = (blog) => {
-  console.log(blog);
+let PostContent = (props) => {
+  return h('div', {}, [
+      h('img', {src: "samcham.gif", className: 'samcham'}),
+      h('h2', {}, props.title),
+      h('h4', {}, 'Built with React, easy peasy.'),
+      h('p', {}, props.body),
+      h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.'),
+      DeleteButton(props)
+  ])
+}
+
+let Blog = (prop) => {
+  console.log(prop);
   return h('div', {className: 'post'}, [ 
       User(),
-      PostContent(blog)
+      PostContent(prop)
     ]) 
   ;
 }
 
-let BlogList = (blogs) => blogs.map(blog => Blog(blog));
+let BlogList = (props) => props.map(prop => Blog(prop));
 
 let Title = () => h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL')
 
@@ -111,8 +122,8 @@ let BlogHomePage = () => {
 
     
 
-
-d(h(BlogHomePage), document.getElementById('postArea'));
+let rerender = () => d(h(BlogHomePage), document.getElementById('postArea'));
+rerender();
 
 
 
