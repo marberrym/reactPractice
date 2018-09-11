@@ -59,6 +59,12 @@ let posts = [
     }
 ]
 
+let titles = ['Samarai Champloo',
+              'Cowboy Bebop',
+              'Mmmm Faye Valentine',
+              'React FTW']
+let titleIndex = 0;
+
 let User = () => {
   return h('div', {className: 'iconBox'}, [
     h('img', {className: 'icon', src: 'rick.png'}),
@@ -73,6 +79,15 @@ let DeleteButton = (props) => {
       posts = posts.filter(post => post.title !== props.title);
       rerender();
     }}, 'Delete this post!'),
+  ])
+}
+
+let ChangeBlogName = () => {
+  return h('div', {className: 'flex'}, [
+    h('button', {className: 'btn', onClick: () => {
+      titleIndex = (titleIndex + 1) % titles.length;
+      rerender();
+    }}, 'Change ze blog!')
   ])
 }
 
@@ -98,7 +113,7 @@ let Blog = (prop) => {
 
 let BlogList = (props) => props.map(prop => Blog(prop));
 
-let Title = () => h('h1', {className: 'mainHead'}, 'THIS THAT REACT BLOG FOOL')
+let Title = () => h('h1', {className: 'mainHead'}, titles[titleIndex])
 
 let BuildBlog = () => h('div', {className: 'flexColumn'}, BlogList(posts))
 
@@ -113,6 +128,7 @@ let SideBar = () => {
 let BlogHomePage = () => {
   return h('div', {}, [
     h(Title, {}),
+    h(ChangeBlogName, {}),
     h(BuildBlog, {}),
     h(SideBar, {})
   ])
