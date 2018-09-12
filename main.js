@@ -16,23 +16,14 @@ let User = () => {
 
 let DeleteButton = (props) => {
   return h('div', {className: 'flex'}, [
-    h('button', {className: 'btn', onClick: () => {
-      posts = posts.filter(post => post.title !== props.postTitle);
-      rerender();
-    }}, 'Delete this post!'),
+    h('button', {className: 'btn', onClick: () => props.deletePost(props)}, 'Delete this post!')
   ])
 }
 
 let ChangeBlogName = (props) => {
-  console.log(props);
   return h('div', {className: 'flex'}, [
-    h('button', {className: 'btn', onClick: () => {
-      console.log(titles.length);
-      let newState = (props.titleIndex + 1) % titles.length;
-      console.log(newState);
-      this.setState({titleIndex: newState});
-      console.log(props);
-    }}, 'Change ze blog!')
+    h('button', {className: 'btn', onClick: () => props.changeName()
+    }, 'Change ze blog!')
   ])
 }
 
@@ -40,17 +31,8 @@ let ChangeBlogName = (props) => {
 
 let SnakifyButton = (props) => {
   return h('div', {className: 'flex'}, [
-    h('button', {className: 'btn', onClick: () => {
-      let newPosts = posts.map(post => {
-        if (post.title === props.postTitle) {
-          return Object.assign({}, props, {title: post.title + '🐍'})
-        } else {
-          return post
-        }     
-      });
-      posts = newPosts;
-      rerender();
-    }}, 'SNAKIFY...sss.'),
+    h('button', {className: 'btn', onClick: () => props.snakify(props) 
+      }, 'SNAKIFY...sss.')
   ])
 }
 
@@ -61,15 +43,15 @@ let PostContent = (props) => {
       h('h4', {}, 'Built with React, easy peasy.'),
       h('p', {}, props.body),
       h('div', {}, 'Oh, you fancy huh?  Nails done, hair done, erryting BIG.'),
-      h(DeleteButton, {postTitle: props.title}),
-      h(SnakifyButton, {postTitle: props.title}),
+      h(DeleteButton, {postTitle: props.title, deletePost: props.deletePost}),
+      h(SnakifyButton, {postTitle: props.title, snakify: props.snakify}),
   ])
 }
 
 let Blog = (props) => {
   return h('div', {className: 'post'}, [ 
       h(User, {}),
-      h(PostContent, {title: props.thispost.title, body: props.thispost.body})
+      h(PostContent, {title: props.thispost.title, body: props.thispost.body, snakify: props.snakify, deletePost: props.deletePost})
     ]) 
   ;
 }
@@ -77,7 +59,7 @@ let Blog = (props) => {
 let BlogList = (props) => {
   return h('div', {}, 
     props.postlist.map(post => {
-      return h(Blog, {thispost: post})
+      return h(Blog, {thispost: post, snakify: props.snakify, deletePost: props.deletePost})
     })
   )
 }
@@ -88,7 +70,7 @@ let Title = (props) => {
 
 }
 let BuildBlog = (props) => {
-  return h('div', {className: 'flexColumn'}, h(BlogList, {postlist: props.postlist}))
+  return h('div', {className: 'flexColumn'}, h(BlogList, {postlist: props.postlist, snakify: props.snakify, deletePost: props.deletePost}))
 }
 
 let SideBar = () => {
@@ -165,10 +147,33 @@ class BlogHomePage extends React.Component {
     }
   }
   render() {
+    let changeName = () => {
+        let newState = (this.state.titleIndex + 1) % titles.length;
+        this.setState({titleIndex: newState});
+      }
+
+    let deletePost = (props) => {
+      this.setState({
+        postlist: this.state.postlist.filter(post => post.title !== props.postTitle)
+      }) 
+    }
+    
+    let snakify = (props) => {
+      this.setState({
+        postlist: this.state.postlist.map(post => {
+          if (post.title === props.postTitle) {
+            return Object.assign({}, post, {title: post.title + '🐍'})
+          } else {
+            return post
+          }
+        }) 
+      })
+    }  
+
     return h('div', {}, [
       h(Title, {titleIndex: this.state.titleIndex}),
-      h(ChangeBlogName, {titleIndex: this.state.titleIndex}),
-      h(BuildBlog, {postlist: this.state.postlist}),
+      h(ChangeBlogName, {changeName: changeName}),
+      h(BuildBlog, {postlist: this.state.postlist, snakify: snakify, deletePost: deletePost}),
       h(SideBar, {})
     ])
   }
